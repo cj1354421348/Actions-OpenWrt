@@ -33,7 +33,7 @@ env:
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   UPLOAD_COWTRANSFER: false
-  UPLOAD_WETRANSFER: false
+  UPLOAD_WETRANSFER: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -67,7 +67,8 @@ jobs:
 
     - name: Load custom feeds
       run: |
-        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        #[ -e $FEEDS_CONF ] && sed 's/^#\(src-git helloworld https:\/\/github.com\/fw876\/helloworld\)/\1/' $FEEDS_CONF > ${FEEDS_CONF}.mod && mv ${FEEDS_CONF}.mod openwrt/feeds.conf.default
+        [ -e $FEEDS_CONF ] && sed 's/^#\(src-git helloworld https:\/\/github.com\/fw876\/helloworld\)/\1/' $FEEDS_CONF > openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P1_SH
